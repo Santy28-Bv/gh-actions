@@ -1,0 +1,18 @@
+name: Prueba de ejecucion de Script
+run-name: Script de Python en Ubuntu
+on: [push]
+jobs:
+  ejecuta-script-python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Inicia Actions
+        run: echo "Inicia Actions"
+
+      - name: Listar archivos
+        run: ls -al
+
+      - name: Ejecutar script de Python
+        run: python app.py
