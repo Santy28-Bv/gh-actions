@@ -1,0 +1,38 @@
+name: Ejecutar Proyecto Node.js y Deno
+run-name: ${{ github.actor }} is testing out Node & Deno 🚀
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  ejecutar-node:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar el código del repositorio
+      uses: actions/checkout@v4
+
+    - name: Configurar Node.js (Versión LTS Óptima)
+      uses: actions/setup-node@v4
+      with:
+        node-version: 'lts/*'
+
+    - name: Ejecutar app.js con Node
+      run: node app.js
+
+  ejecutar-deno:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar el código del repositorio
+      uses: actions/checkout@v4
+
+    - name: Config Deno
+      uses: denoland/setup-deno@v2
+      with:
+        deno-version: v2.x 
+
+    - name: Ejecutar app.js con Deno
+      run: deno run --allow-all app.js

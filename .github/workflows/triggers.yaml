@@ -1,0 +1,183 @@
+name: Workflow con Todos los Triggers | Ejercicio de la presentación
+
+run-name: >
+  Workflow ejecutado por ${{ github.actor }} 🌿🌿🌿
+  usando el evento ${{ github.event_name }} 🚀👨‍🚀🌕
+
+on:
+
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "**.py"
+      - "**.yml"
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - main
+
+  issues:
+    types:
+      - opened
+      - edited
+      - closed
+
+  issue_comment:
+    types:
+      - created
+      - edited
+
+  workflow_dispatch:
+    inputs:
+
+      nombre:
+        description: "Nombre del usuario"
+        required: true
+        default: "Juan"
+        type: string
+
+      edad:
+        description: "Edad"
+        required: true
+        default: 18
+        type: number
+
+      ambiente:
+        description: "Ambiente"
+        required: true
+        type: choice
+        options:
+          - desarrollo
+          - pruebas
+          - produccion
+
+      debug:
+        description: "Activar Debug"
+        required: false
+        type: boolean
+
+  schedule:
+    - cron: "0 * * * *"
+
+env:
+  CURSO: GitHub Actions
+  VERSION: "1.0"
+
+jobs:
+
+  informacion:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Mostrar información del Workflow
+        run: |
+          echo "Curso: $CURSO"
+          echo "Versión: $VERSION"
+
+      - name: Mostrar información del evento
+        run: |
+          echo "Evento: ${{ github.event_name }}"
+          echo "Repositorio: ${{ github.repository }}"
+          echo "Rama: ${{ github.ref }}"
+          echo "Usuario: ${{ github.actor }}"
+          echo "Runner: ${{ runner.os }}"
+
+  workflow-manual:
+
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Mostrar datos capturados
+        run: |
+          echo "Nombre: ${{ inputs.nombre }}"
+          echo "Edad: ${{ inputs.edad }}"
+          echo "Ambiente: ${{ inputs.ambiente }}"
+          echo "Debug: ${{ inputs.debug }}"
+
+      - name: Es mayor de edad
+        if: ${{ inputs.edad >= 18 }}
+        run: |
+          echo "${{ inputs.nombre }} es mayor de edad"
+
+      - name: Es menor de edad
+        if: ${{ inputs.edad < 18 }}
+        run: |
+          echo "${{ inputs.nombre }} es menor de edad"
+
+  pull-request:
+
+    if: ${{ github.event_name == 'pull_request' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Información del Pull Request
+        run: |
+          echo "Se abrió o actualizó un Pull Request"
+
+  issue:
+
+    if: ${{ github.event_name == 'issues' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Mostrar Issue
+        run: |
+          echo "Título: ${{ github.event.issue.title }}"
+          echo "Estado: ${{ github.event.issue.state }}"
+
+  comentario:
+
+    if: ${{ github.event_name == 'issue_comment' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Mostrar comentario
+        run: |
+          echo "Comentario:"
+          echo "${{ github.event.comment.body }}"
+
+  push-main:
+
+    if: ${{ github.event_name == 'push' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Push realizado
+        run: |
+          echo "Se hizo un Push"
+          echo "Autor: ${{ github.actor }}"
+          echo "Rama: ${{ github.ref }}"
+
+  tarea-programada:
+
+    if: ${{ github.event_name == 'schedule' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Ejecución automática
+        run: |
+          echo "Este workflow fue ejecutado mediante Cron."
