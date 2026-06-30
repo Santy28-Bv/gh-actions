@@ -1,4 +1,6 @@
-print("Hello, World!")
+import os
+username = os.getenv('USERNAME')
+print(f"Hello {username}!")
 
 for i in [1, 2, 3]:
-    print(f"XD: * i")
+    print(f" {username} " * i)

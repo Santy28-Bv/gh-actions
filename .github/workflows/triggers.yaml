@@ -1,8 +1,8 @@
 name: Workflow con Todos los Triggers | Ejercicio de la presentación
 
 run-name: >
-  Workflow ejecutado por ${{ github.actor }} 🌿🌿🌿
-  usando el evento ${{ github.event_name }} 🚀👨‍🚀🌕
+  Workflow ejecutado por ${{ github.actor }} 
+  usando el evento ${{ github.event_name }} 
 
 on:
 

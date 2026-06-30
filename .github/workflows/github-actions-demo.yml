@@ -5,13 +5,13 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 Helloooo World 🚀🚀🚀🚀"
+      - run: echo "Holaaa "
       - run: echo "Escribo en un archivo" > file.txt
       - run: ls -al
       - run: cat file.txt
       - run: rm -rf file.txt
       - run: ls -al
-      - run: echo "🎉 The job was automatically tried. 🎉"
+      - run: echo "------------------------------"
       - run: echo "------------------------------"
       - name: Clonar Proyecto
         uses: actions/checkout@v6

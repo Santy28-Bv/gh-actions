@@ -1,0 +1,21 @@
+name:  Variables
+run-name: WF de acts usando vars
+on: [push, workflow_dispatch]
+env:
+  DAY_OF_WEEK: Lunes 25
+  MONTH: Mayo
+jobs:
+  variables:
+    runs-on: ubuntu-latest
+    env:
+      PORT: 8080
+      First_name: Juan
+    steps:
+      - name: Show fecha
+        run: echo "Hoy es $DAY_OF_WEEK del mes $MONTH"
+      - name: Show port
+        run: echo "Configured port -> $PORT"
+      - name: Show nombre
+        run: echo "Mi nombre es $First_name"
+      - name: Leyendo variables del repo
+        run: echo "Valor de la var -> ${{ vars.NOMBRE }}"

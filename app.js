@@ -1,0 +1,1 @@
+console.log('¡Hola mundo desde Node.js en mi máquina local!');
